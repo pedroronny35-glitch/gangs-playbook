@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gangs Team — Playbook</title>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #161a22;
+      --border: #1f2533;
+      --accent: #e8b84b;
+      --accent-dim: #b8902f;
+      --text: #dce2ee;
+      --muted: #7a8299;
+      --red: #e05252;
+      --green: #52e07c;
+      --blue: #5295e0;
+      --tag-bg: #1f2533;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 15, 20, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 32px;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-right: auto;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 0 18px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+
+    nav a:hover { color: var(--text); }
+    nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 32px 56px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -.02em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 640px;
+      font-size: 16px;
+    }
+
+    /* ── FUNNEL STRIP ── */
+    .funnel {
+      display: flex;
+      gap: 0;
+      max-width: 960px;
+      margin: 0 auto 64px;
+      padding: 0 32px;
+    }
+
+    .funnel-step {
+      flex: 1;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-right: none;
+      position: relative;
+    }
+
+    .funnel-step:first-child { border-radius: 8px 0 0 8px; }
+    .funnel-step:last-child  { border-right: 1px solid var(--border); border-radius: 0 8px 8px 0; }
+
+    .funnel-step::after {
+      content: '';
+      position: absolute;
+      right: -13px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 13px solid transparent;
+      border-bottom: 13px solid transparent;
+      border-left: 12px solid var(--border);
+      z-index: 1;
+    }
+
+    .funnel-step:last-child::after { display: none; }
+
+    .funnel-num {
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .funnel-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .funnel-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── SECTION ── */
+    section {
+      max-width: 960px;
+      margin: 0 auto 80px;
+      padding: 0 32px;
+      scroll-margin-top: 72px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-num {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .card-icon {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+
+    .callout.danger { border-left-color: var(--red); }
+    .callout.success { border-left-color: var(--green); }
+    .callout.info { border-left-color: var(--blue); }
+
+    .callout-label {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .callout.danger .callout-label { color: var(--red); }
+    .callout.success .callout-label { color: var(--green); }
+    .callout.info .callout-label { color: var(--blue); }
+    .callout .callout-label { color: var(--accent); }
+
+    .callout p, .callout li {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .callout ul { padding-left: 18px; margin-top: 8px; }
+    .callout li { margin-bottom: 4px; }
+
+    /* ── LIST BLOCK ── */
+    .list-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+
+    .list-block h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 16px;
+    }
+
+    .check-list { list-style: none; padding: 0; }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .check-list li:last-child { border-bottom: none; }
+
+    .check-list .icon { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+    .check-list .icon.red { color: var(--red); }
+    .check-list .icon.green { color: var(--green); }
+
+    /* ── RULE ── */
+    .rule-box {
+      background: linear-gradient(135deg, rgba(232,184,75,.07), rgba(232,184,75,.02));
+      border: 1px solid rgba(232,184,75,.25);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .rule-box .rule-label {
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent-dim);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .rule-box .rule-text {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      color: var(--accent);
+    }
+
+    .rule-box .rule-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ── METRICS ROW ── */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -.02em;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── STEP LIST ── */
+    .steps { list-style: none; padding: 0; counter-reset: steps; }
+
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text);
+      align-items: flex-start;
+    }
+
+    .steps li:last-child { border-bottom: none; }
+
+    .steps li::before {
+      content: counter(steps);
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 800;
+      font-size: 12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── ROLE TABLE ── */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .role-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .role-tag {
+      display: inline-block;
+      background: rgba(232,184,75,.12);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .role-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .role-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ── UTIL ── */
+    .mb-8 { margin-bottom: 8px; }
+    .mb-16 { margin-bottom: 16px; }
+    .mb-24 { margin-bottom: 24px; }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; overflow-x: auto; }
+      .hero { padding: 48px 16px 40px; }
+      .hero h1 { font-size: 28px; }
+      section { padding: 0 16px; }
+      .funnel { padding: 0 16px; flex-direction: column; }
+      .funnel-step { border-right: 1px solid var(--border); border-bottom: none; border-radius: 0; }
+      .funnel-step:first-child { border-radius: 8px 8px 0 0; }
+      .funnel-step:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+      .funnel-step::after { display: none; }
+      .metrics { grid-template-columns: 1fr; }
+      .role-grid { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Gangs Team</span>
+  <a href="#entrega" class="active">Delivery</a>
+  <a href="#engajamento">Engagement</a>
+  <a href="#retencao">Retention</a>
+  <a href="#ativacao">Activation</a>
+  <a href="#metas">Goals</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Orgs · Gangs</div>
+  <h1>The Gangs Team Playbook</h1>
+  <p>Processes, standards, and guidelines so everyone on the team operates the same way — from delivery all the way through activation.</p>
+</div>
+
+<!-- FUNNEL STRIP -->
+<div class="funnel">
+  <div class="funnel-step">
+    <div class="funnel-num">Phase 01</div>
+    <div class="funnel-label">Delivery</div>
+    <div class="funnel-desc">The gang is born</div>
+  </div>
+  <div class="funnel-step">
+    <div class="funnel-num">Phase 02</div>
+    <div class="funnel-label">Engagement</div>
+    <div class="funnel-desc">The gang grows</div>
+  </div>
+  <div class="funnel-step">
+    <div class="funnel-num">Phase 03</div>
+    <div class="funnel-label">Retention</div>
+    <div class="funnel-desc">The gang solidifies</div>
+  </div>
+  <div class="funnel-step">
+    <div class="funnel-num">Phase 04</div>
+    <div class="funnel-label">Activation</div>
+    <div class="funnel-desc">The gang stabilizes</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     FASE 1 — ENTREGA
+════════════════════════════════════════════════ -->
+<section id="entrega">
+  <div class="section-header">
+    <span class="section-num">Phase 01</span>
+    <h2 class="section-title">Delivery</h2>
+    <span class="section-sub">Gang Delivery</span>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">What is gang delivery?</div>
+    <p>Delivering a gang means putting it in the right hands — people who know what they're doing, who will commit to growth, and who will recruit. <strong>Handing it off to someone who isn't ready is a serious mistake.</strong></p>
+  </div>
+
+  <div class="list-block mb-24">
+    <h3>How to find the right leader</h3>
+    <ul class="check-list">
+      <li><span class="icon">→</span> Open the F1 panel and go to the <strong>Unemployed</strong> group</li>
+      <li><span class="icon">→</span> Look for players who previously held a gang rank (01, 02, 03, Management) and left</li>
+      <li><span class="icon">→</span> Use city announcements to attract as many candidates as possible each day</li>
+    </ul>
+  </div>
+
+  <div class="cards mb-24">
+    <div class="card">
+      <div class="card-icon">👁</div>
+      <h3>Ideal leader profile</h3>
+      <p>Consistent presence, genuine desire to grow, good attitude, and the ability to engage people. <em>They don't need to be perfect</em> — but they need real drive that you can shape in the 00 slot.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">✅</div>
+      <h3>00 Validation</h3>
+      <p>This is the decisive step — don't skip it. Watch whether they show up, call members together, don't vanish when needed, carry themselves well, and genuinely want to grow the gang.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📞</div>
+      <h3>Minimum 5 in the call</h3>
+      <p>Only hand over a compound to someone who brings at least 5 people to the call. With 5+, there's already a mini-hierarchy to recruit from and grow. Gangs starting with 2 never build consistency.</p>
+    </div>
+  </div>
+
+  <div class="callout danger">
+    <div class="callout-label">Common delivery mistakes</div>
+    <ul>
+      <li>Handing off to any player without validation</li>
+      <li>Delivering a gang with fewer than 5 people in the call</li>
+      <li>Only focusing on the night shift — creates the illusion of a full city but builds no consistency</li>
+      <li>"Drop the knife and disappear" — without post-delivery follow-up, the gang collapses in 1–2 days</li>
+    </ul>
+  </div>
+
+  <div class="list-block">
+    <h3>Post-delivery support (mandatory)</h3>
+    <ul class="check-list">
+      <li><span class="icon green">✓</span> Guide the leader through the start of management</li>
+      <li><span class="icon green">✓</span> Help with the first recruiting runs</li>
+      <li><span class="icon green">✓</span> Show how to organize presence and reinforcement</li>
+      <li><span class="icon green">✓</span> Explain what needs to happen in the first few days</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FASE 2 — ENGAJAMENTO
+════════════════════════════════════════════════ -->
+<section id="engajamento">
+  <div class="section-header">
+    <span class="section-num">Phase 02</span>
+    <h2 class="section-title">Engagement</h2>
+    <span class="section-sub">Gang Engagement</span>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-label">Goal of engagement</div>
+    <p>Structure newly created gangs so they don't die right at the start. The goal isn't just growing the number — it's growing <strong>with organization, routine, and connection</strong>.</p>
+  </div>
+
+  <div class="cards mb-24">
+    <div class="card">
+      <div class="card-icon">🤝</div>
+      <h3>Team recruiting</h3>
+      <p>Go to the peer and recruit alongside the gang. This creates momentum, shows organization, and encourages the leader to stay actively involved.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌡</div>
+      <h3>Internal culture</h3>
+      <p>Numbers mean nothing if the environment is toxic. A new member who walks into a cold or hostile vibe will leave fast and never come back — destroying daily retention.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤜</div>
+      <h3>Engage as an ally</h3>
+      <p>Come in as a friend, not as staff. When you show up as "staff checking in," the gang changes behavior artificially. As an ally, you see reality and can actually improve things.</p>
+    </div>
+  </div>
+
+  <div class="list-block mb-24">
+    <h3>Leadership analysis checklist</h3>
+    <ul class="check-list">
+      <li><span class="icon">?</span> Is the leader present?</li>
+      <li><span class="icon">?</span> Do they follow the "be a good person" standard?</li>
+      <li><span class="icon">?</span> Do they show real interest in growing the gang?</li>
+      <li><span class="icon red">!</span> Without leadership the gang may make noise for a bit, but won't sustain the community</li>
+    </ul>
+  </div>
+
+  <div class="callout success">
+    <div class="callout-label">Internal hierarchy</div>
+    <p>Sometimes the leader can't handle everything alone. Help build a <strong>02, 01, 03</strong> structure that's always present — a farm manager, a recruitment manager. A gang that depends solely on the 00 is fragile.</p>
+  </div>
+
+  <div class="list-block">
+    <h3>Early retention of new members</h3>
+    <ul class="check-list">
+      <li><span class="icon green">✓</span> Check if the player came back the next day</li>
+      <li><span class="icon green">✓</span> Confirm they understood what the gang is about</li>
+      <li><span class="icon green">✓</span> See if they connected with someone</li>
+      <li><span class="icon green">✓</span> Verify they participated in something</li>
+      <li><span class="icon green">✓</span> Assess if they felt like they belonged</li>
+      <li><span class="icon red">✗</span> A player who joins today and vanishes tomorrow is not growth — it's empty rotation</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FASE 3 — RETENÇÃO
+════════════════════════════════════════════════ -->
+<section id="retencao">
+  <div class="section-header">
+    <span class="section-num">Phase 03</span>
+    <h2 class="section-title">Retention</h2>
+    <span class="section-sub">Gang Retention</span>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Goal of retention</div>
+    <p>Ensure gangs grow on a solid foundation and don't lose new members. The gang needs to <strong>stop being a temporary group and become a community with its own identity</strong>.</p>
+  </div>
+
+  <div class="list-block mb-24">
+    <h3>5-step process</h3>
+    <ol class="steps">
+      <li>Wall Street integration</li>
+      <li>Invisible entry into the gang</li>
+      <li>Gang retention</li>
+      <li>Hands-on teaching</li>
+      <li>Transition to Activation</li>
+    </ol>
+  </div>
+
+  <div class="cards mb-24">
+    <div class="card">
+      <div class="card-icon">🏦</div>
+      <h3>Wall Street integration</h3>
+      <p>Wall Street is the fuel for accelerated growth. Orgs must align and work alongside Wall Street — they bring the warmed-up players. This division needs to be clear to everyone.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👻</div>
+      <h3>Invisible entry</h3>
+      <p>If the gang changes completely just because you showed up, the community isn't solid yet. The goal is to improve the environment without making the "crutch" visible.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📚</div>
+      <h3>Hands-on teaching</h3>
+      <p>Teaching isn't lecturing. It's showing in practice: how to receive a new member, pull action, maintain the vibe, stay organized, build a good daily routine.</p>
+    </div>
+  </div>
+
+  <div class="list-block">
+    <h3>Spreadsheet monitoring (mandatory)</h3>
+    <ul class="check-list">
+      <li><span class="icon">📊</span> How many people are online at any given moment</li>
+      <li><span class="icon">📊</span> How many players each gang recruited per day</li>
+    </ul>
+    <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+      <p style="font-size:13px; color:var(--muted);">Track: <strong style="color:var(--text)">delivery date · shift · 00 name · player count · growth speed · activation status</strong></p>
+      <p style="font-size:13px; color:var(--muted); margin-top:8px;">Monitoring isn't bureaucracy — it's how you see the truth. Running on assumptions is the worst thing you can do.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FASE 4 — ATIVAÇÃO
+════════════════════════════════════════════════ -->
+<section id="ativacao">
+  <div class="section-header">
+    <span class="section-num">Phase 04</span>
+    <h2 class="section-title">Activation</h2>
+    <span class="section-sub">Gang Activation</span>
+  </div>
+
+  <div class="callout success">
+    <div class="callout-label">What is activation</div>
+    <p>The gang isn't <em>trying</em> to exist — it exists. The goal now is to transform it into a strong, consistent structure with its own identity, hierarchy, and routine.</p>
+  </div>
+
+  <div class="role-grid mb-24">
+    <div class="role-card">
+      <div class="role-tag">Rank 00</div>
+      <h4>Leader</h4>
+      <p>Holds the vision, standards, attitude, and overall direction of the gang.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-tag">Manager</div>
+      <h4>Recruitment</h4>
+      <p>Ensures a continuous flow of new members and consistent growth.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-tag">Manager</div>
+      <h4>Farm</h4>
+      <p>Sustains the operational and economic side of the gang.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Hierarchy rule</div>
+    <p>When these roles truly exist, the gang doesn't rest on one person's shoulders. This is what allows it to <strong>survive when the 00 is absent</strong>.</p>
+  </div>
+
+  <div class="list-block mb-24">
+    <h3>Identity & culture (mandatory)</h3>
+    <ul class="check-list">
+      <li><span class="icon">🎯</span> Its own identity</li>
+      <li><span class="icon">🗣</span> Its own way of talking</li>
+      <li><span class="icon">🤝</span> Its own way of welcoming people</li>
+      <li><span class="icon">⚡</span> Its own way of acting</li>
+      <li><span class="icon">🔄</span> Daily recruiting routine</li>
+      <li><span class="icon">💪</span> Internal pride</li>
+      <li><span class="icon">🏠</span> The feeling of "this gang is ours"</li>
+    </ul>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-label">Continuous recruiting</div>
+    <p>A large gang that stops recruiting starts aging and weakening. There are always people leaving, cooling off, or going less active. <strong>The intake must keep going.</strong> When identity exists, a player who's proud of their gang doesn't leave — they invite others.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     METAS GERAIS
+════════════════════════════════════════════════ -->
+<section id="metas">
+  <div class="section-header">
+    <span class="section-num">General</span>
+    <h2 class="section-title">Goals & Rules</h2>
+    <span class="section-sub">General Goals</span>
+  </div>
+
+  <div class="rule-box mb-24">
+    <div class="rule-label">Main rule</div>
+    <div class="rule-text">Out of every 10 gangs delivered, at least 3 must succeed</div>
+    <div class="rule-sub">Minimum 30% success rate</div>
+  </div>
+
+  <div class="metrics mb-24">
+    <div class="metric">
+      <div class="metric-value">7</div>
+      <div class="metric-label">Gangs delivered per day</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">30+</div>
+      <div class="metric-label">Players per active gang</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">30%</div>
+      <div class="metric-label">Minimum success rate</div>
+    </div>
+  </div>
+
+  <div class="callout danger">
+    <div class="callout-label">What real failure looks like</div>
+    <ul>
+      <li><strong>Leaving a dead gang occupying a slot</strong> — burns the player and locks up the city</li>
+      <li><strong>Disbanding is not automatic failure</strong> — disbanding is better than letting it rot</li>
+      <li>Only working the night shift: creates the illusion of a full city but builds no consistency</li>
+      <li>Delivering to any player: may hit the number but the success rate is zero</li>
+    </ul>
+  </div>
+
+  <div class="callout success">
+    <div class="callout-label">The purpose of Gangs Team</div>
+    <p>The Gangs Team doesn't exist just to open gangs. It exists to <strong>spread life across the city</strong> — active gangs at every hour, across every shift.</p>
+  </div>
+</section>
+
+<footer>
+  Gangs Team Playbook · Internal use · Balanced shift distribution
+</footer>
+
+<script>
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
